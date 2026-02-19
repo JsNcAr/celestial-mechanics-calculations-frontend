@@ -1,0 +1,16 @@
+{
+  "name": "celestial-mechanics-calculations-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && node scripts/copy-assets.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1"
+  }
+}
