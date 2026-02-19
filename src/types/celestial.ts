@@ -1,27 +1,21 @@
 /**
- * Represents a celestial body (planet, moon, star, etc.)
+ * Input payload for a coordinate transformation request.
  */
-export interface CelestialBody {
-  id: string;
-  name: string;
-  type: CelestialBodyType;
-  mass: number;
-  radius: number;
-  distanceFromSun?: number;
+export interface TransformationRequest {
+  x: number;
+  y: number;
+  z: number;
+  /** Obliquity of the ecliptic in degrees. Defaults to the J2000 value (~23.439°) when omitted. */
+  obliquityDeg?: number;
 }
 
-export type CelestialBodyType = "star" | "planet" | "moon" | "asteroid" | "comet";
-
 /**
- * Orbital elements that define a Keplerian orbit.
+ * Heliocentric rectangular ecliptic coordinates returned by the backend.
  */
-export interface OrbitalElements {
-  semiMajorAxis: number;
-  eccentricity: number;
-  inclination: number;
-  longitudeOfAscendingNode: number;
-  argumentOfPeriapsis: number;
-  trueAnomaly: number;
+export interface EclipticCoordinates {
+  x: number;
+  y: number;
+  z: number;
 }
 
 /**

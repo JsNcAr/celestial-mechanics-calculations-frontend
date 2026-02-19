@@ -1,7 +1,6 @@
 import type { CelestialApi } from "../api/index.js";
 import { showError } from "../utils/notifications.js";
 import { escapeHtml } from "../utils/escape-html.js";
-import type { CelestialBody } from "../types/index.js";
 
 /**
  * Renders the home page into the given container and wires up its interactions.
@@ -10,13 +9,35 @@ export function renderHomePage(container: HTMLElement, api: CelestialApi): void 
   container.innerHTML = `
     <section>
       <hgroup>
-        <h2>Celestial Bodies</h2>
-        <p>Explore catalogued bodies and run orbital mechanics calculations.</p>
+        <h2>Coordinate Transformation</h2>
+        <p>Convert heliocentric rectangular equatorial coordinates to ecliptic coordinates.</p>
       </hgroup>
 
-      <div id="bodies-grid" aria-live="polite" aria-busy="true">
-        <p>Loading celestial bodies…</p>
-      </div>
+      <form id="transform-form">
+        <fieldset class="grid">
+          <label>
+            X
+            <input id="coord-x" name="x" type="number" step="any" placeholder="e.g. 0.716" required />
+          </label>
+          <label>
+            Y
+            <input id="coord-y" name="y" type="number" step="any" placeholder="e.g. 0.698" required />
+          </label>
+          <label>
+            Z
+            <input id="coord-z" name="z" type="number" step="any" placeholder="e.g. 0.000" required />
+          </label>
+        </fieldset>
+
+        <label>
+          Obliquity of the ecliptic (°) <small>optional — defaults to J2000 value (~23.439°)</small>
+          <input id="obliquity-input" name="obliquityDeg" type="number" step="any" placeholder="23.439" />
+        </label>
+
+        <button id="btn-transform" type="button">Transform</button>
+      </form>
+
+      <div id="transform-result" aria-live="polite"></div>
     </section>
 
     <section>
@@ -47,38 +68,39 @@ export function renderHomePage(container: HTMLElement, api: CelestialApi): void 
     </section>
   `;
 
-  loadBodies(api);
+  wireTransformButton(api);
   wireCalculationButtons(api);
 }
 
-async function loadBodies(api: CelestialApi): Promise<void> {
-  const grid = document.getElementById("bodies-grid")!;
+async function wireTransformButton(api: CelestialApi): Promise<void> {
+  document.getElementById("btn-transform")?.addEventListener("click", async () => {
+    const x = parseFloat(getInputValue("coord-x"));
+    const y = parseFloat(getInputValue("coord-y"));
+    const z = parseFloat(getInputValue("coord-z"));
+    if (isNaN(x) || isNaN(y) || isNaN(z)) return;
 
-  try {
-    const response = await api.listBodies();
-    if (response.data.length === 0) {
-      grid.innerHTML = "<p>No celestial bodies found.</p>";
-      return;
+    const obliquityRaw = getInputValue("obliquity-input");
+    const obliquityDeg = obliquityRaw !== "" ? parseFloat(obliquityRaw) : undefined;
+
+    const resultEl = document.getElementById("transform-result")!;
+    resultEl.innerHTML = "<p aria-busy='true'>Transforming…</p>";
+    try {
+      const { data } = await api.transformEquatorialToEcliptic({ x, y, z, obliquityDeg });
+      resultEl.innerHTML = `
+        <article>
+          <header>Ecliptic Coordinates</header>
+          <dl>
+            <dt>X</dt><dd>${escapeHtml(data.x.toString())}</dd>
+            <dt>Y</dt><dd>${escapeHtml(data.y.toString())}</dd>
+            <dt>Z</dt><dd>${escapeHtml(data.z.toString())}</dd>
+          </dl>
+        </article>
+      `;
+    } catch (error) {
+      resultEl.innerHTML = "";
+      showError(error);
     }
-    grid.setAttribute("aria-busy", "false");
-    grid.innerHTML = response.data.map(bodyCard).join("");
-  } catch (error) {
-    grid.setAttribute("aria-busy", "false");
-    grid.innerHTML = "<p>Failed to load celestial bodies.</p>";
-    showError(error);
-  }
-}
-
-function bodyCard(body: CelestialBody): string {
-  return `
-    <article>
-      <header><strong>${escapeHtml(body.name)}</strong> <small>(${escapeHtml(body.type)})</small></header>
-      <dl>
-        <dt>Mass</dt><dd>${body.mass.toExponential(3)} kg</dd>
-        <dt>Radius</dt><dd>${body.radius.toExponential(3)} m</dd>
-      </dl>
-    </article>
-  `;
+  });
 }
 
 function wireCalculationButtons(api: CelestialApi): void {
