@@ -1,4 +1,4 @@
-import type { ApiResponse, PaginatedResponse } from "../types/index.js";
+import type { ApiResponse } from "../types/index.js";
 import { ApiError } from "./api-error.js";
 
 /** Allowed HTTP methods for requests. */
@@ -46,10 +46,6 @@ export class HttpClient {
 
   get<T>(path: string, options?: RequestOptions): Promise<ApiResponse<T>> {
     return this.request<T>("GET", path, undefined, options);
-  }
-
-  getList<T>(path: string, options?: RequestOptions): Promise<PaginatedResponse<T>> {
-    return this.request<T[]>("GET", path, undefined, options) as Promise<PaginatedResponse<T>>;
   }
 
   post<T>(path: string, body: unknown, options?: RequestOptions): Promise<ApiResponse<T>> {

@@ -1,8 +1,7 @@
-export type { ApiResponse, ApiErrorPayload, PaginationMeta, PaginatedResponse } from "./api.js";
+export type { ApiResponse, ApiErrorPayload } from "./api.js";
 export type {
-  CelestialBody,
-  CelestialBodyType,
-  OrbitalElements,
+  TransformationRequest,
+  EclipticCoordinates,
   OrbitalPeriodResult,
   GravitationalForceResult,
 } from "./celestial.js";

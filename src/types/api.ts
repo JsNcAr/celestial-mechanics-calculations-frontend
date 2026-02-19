@@ -16,19 +16,3 @@ export interface ApiErrorPayload {
   status: number;
 }
 
-/**
- * Pagination metadata included in list responses.
- */
-export interface PaginationMeta {
-  page: number;
-  perPage: number;
-  total: number;
-  totalPages: number;
-}
-
-/**
- * Generic paginated response envelope.
- */
-export interface PaginatedResponse<T> extends ApiResponse<T[]> {
-  meta: PaginationMeta;
-}

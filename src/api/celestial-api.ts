@@ -1,9 +1,10 @@
 import type {
-  CelestialBody,
+  TransformationRequest,
+  EclipticCoordinates,
   OrbitalPeriodResult,
   GravitationalForceResult,
 } from "../types/index.js";
-import type { ApiResponse, PaginatedResponse } from "../types/index.js";
+import type { ApiResponse } from "../types/index.js";
 import type { HttpClient } from "./http-client.js";
 
 /**
@@ -17,14 +18,15 @@ export class CelestialApi {
     this.client = client;
   }
 
-  // ── Bodies ──────────────────────────────────────────────────────────────────
+  // ── Coordinate Transformations ───────────────────────────────────────────────
 
-  listBodies(): Promise<PaginatedResponse<CelestialBody>> {
-    return this.client.getList<CelestialBody>("/bodies");
-  }
-
-  getBody(id: string): Promise<ApiResponse<CelestialBody>> {
-    return this.client.get<CelestialBody>(`/bodies/${encodeURIComponent(id)}`);
+  transformEquatorialToEcliptic(
+    payload: TransformationRequest,
+  ): Promise<ApiResponse<EclipticCoordinates>> {
+    return this.client.post<EclipticCoordinates>(
+      "/transformations/equatorial-to-ecliptic",
+      payload,
+    );
   }
 
   // ── Calculations ─────────────────────────────────────────────────────────────
