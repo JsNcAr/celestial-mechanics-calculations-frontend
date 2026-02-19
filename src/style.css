@@ -1,6 +1,3 @@
-/* Import Pico CSS — classless variant for clean semantic HTML styling */
-@import "@picocss/pico/css/pico.min.css";
-
 /* ── Custom properties ─────────────────────────────────────────────────────── */
 :root {
   --spacing-section: 2rem;

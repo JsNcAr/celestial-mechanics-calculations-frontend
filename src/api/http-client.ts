@@ -1,5 +1,5 @@
-import type { ApiResponse, PaginatedResponse } from "../types/index.ts";
-import { ApiError } from "./api-error.ts";
+import type { ApiResponse, PaginatedResponse } from "../types/index.js";
+import { ApiError } from "./api-error.js";
 
 /** Allowed HTTP methods for requests. */
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

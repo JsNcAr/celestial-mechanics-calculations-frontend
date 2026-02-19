@@ -2,9 +2,9 @@ import type {
   CelestialBody,
   OrbitalPeriodResult,
   GravitationalForceResult,
-} from "../types/index.ts";
-import type { ApiResponse, PaginatedResponse } from "../types/index.ts";
-import type { HttpClient } from "./http-client.ts";
+} from "../types/index.js";
+import type { ApiResponse, PaginatedResponse } from "../types/index.js";
+import type { HttpClient } from "./http-client.js";
 
 /**
  * All celestial-mechanics API calls are grouped in this module.

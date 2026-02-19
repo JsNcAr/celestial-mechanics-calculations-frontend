@@ -1,5 +1,5 @@
-import { isApiError } from "../api/index.ts";
-import { escapeHtml } from "./escape-html.ts";
+import { isApiError } from "../api/index.js";
+import { escapeHtml } from "./escape-html.js";
 
 /**
  * Renders a dismissible error toast into #notifications.

@@ -1,4 +1,4 @@
-export { createHttpClient, HttpClient } from "./http-client.ts";
-export type { RequestOptions } from "./http-client.ts";
-export { ApiError, isApiError } from "./api-error.ts";
-export { CelestialApi } from "./celestial-api.ts";
+export { createHttpClient, HttpClient } from "./http-client.js";
+export type { RequestOptions } from "./http-client.js";
+export { ApiError, isApiError } from "./api-error.js";
+export { CelestialApi } from "./celestial-api.js";

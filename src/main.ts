@@ -1,7 +1,6 @@
-import "./style.css";
-import config from "./config.ts";
-import { createHttpClient, CelestialApi } from "./api/index.ts";
-import { renderHomePage } from "./pages/home.ts";
+import config from "./config.js";
+import { createHttpClient, CelestialApi } from "./api/index.js";
+import { renderHomePage } from "./pages/home.js";
 
 // ── Bootstrap ────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import type { ApiErrorPayload } from "../types/index.ts";
+import type { ApiErrorPayload } from "../types/index.js";
 
 /**
  * Custom error class for API failures.

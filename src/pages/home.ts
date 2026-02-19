@@ -1,7 +1,7 @@
-import type { CelestialApi } from "../api/index.ts";
-import { showError } from "../utils/notifications.ts";
-import { escapeHtml } from "../utils/escape-html.ts";
-import type { CelestialBody } from "../types/index.ts";
+import type { CelestialApi } from "../api/index.js";
+import { showError } from "../utils/notifications.js";
+import { escapeHtml } from "../utils/escape-html.js";
+import type { CelestialBody } from "../types/index.js";
 
 /**
  * Renders the home page into the given container and wires up its interactions.
